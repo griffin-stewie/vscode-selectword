@@ -1,7 +1,7 @@
 {
     "name": "selectword",
     "displayName": "selectword",
-    "description": "Select word",
+    "description": "Select word, just like same as `editor:select-word` feature on Atom.",
     "version": "0.0.1",
     "publisher": "griffin-stewie",
     "engines": {
@@ -10,6 +10,7 @@
     "categories": [
         "Other"
     ],
+    "license": "SEE LICENSE IN LICENSE",
     "activationEvents": [
         "onCommand:extension.selectWord"
     ],
