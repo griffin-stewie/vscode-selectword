@@ -2,7 +2,7 @@
     "name": "selectword",
     "displayName": "selectword",
     "description": "Select word, just like same as `editor:select-word` feature on Atom.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "griffin-stewie",
     "engines": {
 		"vscode": "^1.41.0"
