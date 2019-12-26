@@ -6,27 +6,30 @@ import * as vscode from 'vscode';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.selectWord', () => {
-        var editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            return; // No open text editor
+    let disposable = vscode.commands.registerTextEditorCommand('extension.selectWord', editor => {
+
+        let tempSelections:vscode.Selection[] = [];
+
+        for (const selection of editor.selections) {
+            // the Position object gives you the line and character where the cursor is
+            const position = selection.active;
+
+            // Get word range 
+            var range = editor.document.getWordRangeAtPosition(position);
+
+            if (range === undefined || range.isEmpty) {
+                tempSelections.push(selection);
+                continue;
+            }
+
+            // Select word
+            const wordSelection = new vscode.Selection(range.start, range.end);
+            tempSelections.push(wordSelection);
         }
 
-        // the Position object gives you the line and character where the cursor is
-        const position = editor.selection.active;
-    
-        // Get word range 
-        var range = editor.document.getWordRangeAtPosition(position, null)
-
-        if (range.isEmpty) {
-            return
+        if (tempSelections.length > 0) {
+            editor.selections = tempSelections;            
         }
-
-        // Select word
-        editor.selection = new vscode.Selection(range.start, range.end)
     });
 
     context.subscriptions.push(disposable);
